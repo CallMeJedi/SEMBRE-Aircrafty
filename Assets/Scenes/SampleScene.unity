@@ -217,7 +217,7 @@ GameObject:
   - component: {fileID: 232853033}
   m_Layer: 0
   m_Name: Enemy - Aircraft (5)
-  m_TagString: Enemy
+  m_TagString: EnemyBullet
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -268,7 +268,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: daadefa9193fba14da0900737b4aa06d, type: 2}
+  - {fileID: 2100000, guid: 7de81c77cd7048844be3243bbc2b3f3d, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -307,8 +307,8 @@ Transform:
   m_GameObject: {fileID: 232853032}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: 0.7071068, w: 0.7071068}
-  m_LocalPosition: {x: -1.92, y: 2.4, z: -0.0027111173}
-  m_LocalScale: {x: 1.1746, y: 1.3235, z: 1}
+  m_LocalPosition: {x: -1.4, y: 5.61, z: -0.0027111173}
+  m_LocalScale: {x: 1.1746, y: 0.52127373, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1357967950}

@@ -6,6 +6,7 @@ TagManager:
   tags:
   - InvisWall
   - Enemy
+  - EnemyBullet
   layers:
   - Default
   - TransparentFX

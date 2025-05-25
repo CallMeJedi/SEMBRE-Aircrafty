@@ -19,7 +19,7 @@ public class Control : MonoBehaviour
 
     //HEALTH & DAMAGE
     [SerializeField] int playerHealth = 100;
-    private bool isHit = false;
+    /*private bool isHit = false;*/
     private bool isDead = false;
         //Blink at Hit
     private Renderer rend;
@@ -29,6 +29,8 @@ public class Control : MonoBehaviour
     [SerializeField] float blinkDuration = 0.1f;
     [SerializeField] int blinkCount = 3;
 
+    //Temporary System
+    private bool isPaused = false;
     private void Start()
     {
         rend = GetComponent<Renderer>();
@@ -42,42 +44,21 @@ public class Control : MonoBehaviour
 
     private void Update()
     {
-        //ISDEAD
-        if (playerHealth <= 0 && !isDead)
-        {
-            Debug.Log("PLAYER DIED");
-            isDead = true;
-        }
-        
         // MOVEMENT
         float moveY = Input.GetAxis("Vertical");
         float moveX = Input.GetAxis("Horizontal");
         Vector3 movement = new Vector3(moveX, moveY, 0f).normalized;
         transform.position += movement * movingSpeed * Time.deltaTime;
-
-        // SHOOT
-        if (Input.GetButtonDown("Fire1") && !hasShot)
-        {
-            Shoot();
-            hasShot = true;
-            timer = countdownTime; // Start countdown
-        }
         
-        //Temporary Restart
-        if (Input.GetKeyDown(KeyCode.R))
-        {
-            Restart();
-        }
-
-        // COUNTDOWN
-        if (hasShot)
-        {
-            timer -= Time.deltaTime;
-            if (timer <= 0f)
-            {
-                hasShot = false;
-            }
-        }
+        //Health & Death
+        HandleHealth();
+        
+        //Shooting
+        HandleShooting();
+        
+        //PAUSE AND RESTART
+        HandleRestart();
+        HandlePause();
     }
 
     void OnTriggerEnter(Collider other)
@@ -87,7 +68,7 @@ public class Control : MonoBehaviour
             StartCoroutine(Blink());
             playerHealth -= 15;
         }
-        else if (other.CompareTag("Enemy"))
+        else if (other.CompareTag("EnemyBullet"))
         {
             StartCoroutine(Blink());
             playerHealth -= 10;
@@ -115,10 +96,70 @@ public class Control : MonoBehaviour
         }
     }
 
-    void Restart()
+    void HandlePause()
     {
-        SceneManager.LoadScene("SampleScene");
+        if (Input.GetKeyDown(KeyCode.P))
+        {
+            if (!isPaused)
+            {
+                Time.timeScale = 0f;
+                isPaused = true;
+                Debug.Log("Game Paused");
+            }
+            else
+            {
+                Time.timeScale = 1f;
+                isPaused = false;
+                Debug.Log("Game Resumed");
+            }
+        }
+    }
+    
+    void HandleRestart()
+    {
+        //Temporary Restart
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            SceneManager.LoadScene("SampleScene");
+        }
+    }
+
+    void HandleShooting()
+    {
+        // SHOOT
+        if (Input.GetButtonDown("Fire1") && !hasShot)
+        {
+            Shoot();
+            hasShot = true;
+            timer = countdownTime; // Start countdown
+        }
+        // COUNTDOWN
+        if (hasShot)
+        {
+            timer -= Time.deltaTime;
+            if (timer <= 0f)
+            {
+                hasShot = false;
+            }
+        }
+    }
+
+    void HandleHealth()
+    {
+        //ISDEAD
+        if (playerHealth <= 0 && !isDead)
+        {
+            Debug.Log("PLAYER DIED");
+            isDead = true;
+            Time.timeScale = 0f;
+            SceneManager.LoadScene("SampleScene");
+            Time.timeScale = 1f;
+        }
     }
     
 }
 
+    
+
+
+        
