@@ -1,6 +1,7 @@
 using System;
 using UnityEngine;
 using System.Collections;
+using UnityEngine.SceneManagement;
 
 
 public class Control : MonoBehaviour
@@ -61,6 +62,12 @@ public class Control : MonoBehaviour
             hasShot = true;
             timer = countdownTime; // Start countdown
         }
+        
+        //Temporary Restart
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            Restart();
+        }
 
         // COUNTDOWN
         if (hasShot)
@@ -107,5 +114,11 @@ public class Control : MonoBehaviour
             bulletRb.AddForce(firePoint.right * bulletSpeed);
         }
     }
+
+    void Restart()
+    {
+        SceneManager.LoadScene("SampleScene");
+    }
+    
 }
 
