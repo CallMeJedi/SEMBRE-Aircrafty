@@ -31,24 +31,56 @@ public class Control : MonoBehaviour
 
     //Temporary System
     private bool isPaused = false;
-    private void Start()
+    
+    /*//Model Tilting
+    [SerializeField] float tiltAmount = 30f;
+    [SerializeField] float tiltSpeed = 5f;
+    [SerializeField] Transform playerModel;*/
+    /*Quaternion defaultRotation;*/
+    
+    
+    
+    void Start()
     {
         rend = GetComponent<Renderer>();
         originalColor = rend.material.color;
+        
+        /*defaultRotation = playerModel.localRotation;*/
     }
 
-    private void Awake()
+    void Awake()
     {
         isDead = false;
     }
 
-    private void Update()
+    void Update()
     {
         // MOVEMENT
-        float moveY = Input.GetAxis("Vertical");
+        /*float moveY = Input.GetAxis("Vertical");
         float moveX = Input.GetAxis("Horizontal");
         Vector3 movement = new Vector3(moveX, moveY, 0f).normalized;
+        transform.position += movement * movingSpeed * Time.deltaTime;*/
+        float moveY = Input.GetAxis("Vertical");
+        float moveX = Input.GetAxis("Horizontal");
+
+        Vector3 movement = new Vector3(moveX, moveY, 0f).normalized;
         transform.position += movement * movingSpeed * Time.deltaTime;
+
+        
+        // //Movement Tilt
+        // Quaternion targetRotation;
+        // if (Mathf.Abs(moveY) > 0.01f)
+        // {
+        //     // Calculate target tilt when moving
+        //     float targetX = -moveY * tiltAmount;
+        //     targetRotation = Quaternion.Euler(targetX, 0f, 0f);
+        // }
+        // else
+        // {
+        //     // Return to default upright rotation
+        //     targetRotation = defaultRotation;
+        // }
+        // playerModel.localRotation = Quaternion.Slerp(playerModel.localRotation, targetRotation, Time.deltaTime * tiltSpeed);
         
         //Health & Death
         HandleHealth();
